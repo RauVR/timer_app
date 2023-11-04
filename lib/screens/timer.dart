@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:timer_app/utils/text_container.dart';
 
 class MyTimer extends StatefulWidget {
 
@@ -11,6 +12,8 @@ class MyTimer extends StatefulWidget {
 }
 
 class _MyTimerState extends State<MyTimer> {
+
+  final number = '0';
 
   int _hours = 0;
   int _minutes = 0;
@@ -38,6 +41,7 @@ class _MyTimerState extends State<MyTimer> {
         }
       });
     });
+
   }
 
   void restartTimer() {
@@ -88,51 +92,57 @@ class _MyTimerState extends State<MyTimer> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                    decoration: const BoxDecoration(
-                        //border: Border.all(color: Colors.white),
-                    ),
-                    width: 170,
 
-                    child: Align(
-                        alignment: Alignment.centerRight,
-                        child: Text('$_hours :',style: const TextStyle(fontSize: 135))
+                //TextContainer(text: _hours, width: 250, fontsize: 190)
+
+                Visibility(
+                    visible: (_hours > 0) ? true : false,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        //border: Border.all(color: Colors.white)
+                      ),
+                      width: 150,
+                      child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                            '$_hours:',
+                            style: const TextStyle(fontSize: 190,
+                                fontWeight: FontWeight.w100),
+                          )
+                      ),
                     ),
                 ),
+
+
+                TextContainer(text: _minutes, width: 270,fontsize: 190),
+
+
                 Container(
-                    decoration: const BoxDecoration(
-                        //border: Border.all(color: Colors.white)
-                    ),
-                  width: 220,
-                    child: Align(
-                        alignment: Alignment.centerRight,
-                        child: Text('$_minutes:',style: const TextStyle(fontSize: 135))
-                    ),
-                ),
-                Container(
-                    decoration: const BoxDecoration(
-                        //border: Border.all(color: Colors.white)
-                    ),
-                  width: 220,
-                    child: Align(
-                        alignment: Alignment.centerRight,
-                        child: Text(' $_seconds:',style: const TextStyle(fontSize: 135))
-                    ),
-                ),
-                Container(
-                    decoration: const BoxDecoration(
-                        //border: Border.all(color: Colors.white)
-                    ),
-                  width: 120,
-                    child: Align(
-                        alignment: Alignment.centerRight,
-                        child: Text(' $_milliseconds',style: const TextStyle(fontSize: 60))
-                    ),
+                  decoration: const BoxDecoration(
+                    //border: Border.all(color: Colors.white)
+                  ),
+                  width: 95,
+                  child: Align(
+                      alignment: Alignment.center,
+                      child: Row(
+                        children: <Widget>[
+                          Visibility(
+                              visible: (_seconds<10)?true:false,
+                              child: Text(number,
+                                style: const TextStyle(fontSize: 80,fontWeight: FontWeight.w100),)
+                          ),
+                          Text(
+                            '$_seconds',
+                            style: const TextStyle(fontSize: 80,fontWeight: FontWeight.w100),
+                          ),
+                        ],
+                      )
+                  ),
                 ),
               ],
             ),
 
-            const SizedBox(height: 20),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -152,6 +162,7 @@ class _MyTimerState extends State<MyTimer> {
                   onPressed: restartTimer,
                   child: const Text('Restart'),
                 ),
+                const SizedBox(width: 40),
               ],
             ),
           ],
