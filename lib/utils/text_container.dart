@@ -19,7 +19,7 @@ class _TextContainerState extends State<TextContainer> {
       decoration: const BoxDecoration(
         //border: Border.all(color: Colors.white)
       ),
-      width: widget.width,
+      width: (widget.width/3.427586),
       child: Align(
           alignment: Alignment.centerRight,
           child: Row(
@@ -30,7 +30,7 @@ class _TextContainerState extends State<TextContainer> {
                     style: TextStyle(fontSize: widget.fontsize,fontWeight: FontWeight.w100),)
               ),
               Text(
-                '${widget.text}:',
+                '${widget.text}',
                 style: TextStyle(fontSize: widget.fontsize,fontWeight: FontWeight.w100),
               ),
             ],

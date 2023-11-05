@@ -14,6 +14,7 @@ class MyTimer extends StatefulWidget {
 class _MyTimerState extends State<MyTimer> {
 
   final number = '0';
+  bool isenable=true;
 
   int _hours = 0;
   int _minutes = 0;
@@ -38,7 +39,8 @@ class _MyTimerState extends State<MyTimer> {
         if (_minutes >= 60) {
           _minutes = 0;
           _hours++;
-        }
+        };
+        isenable = false;
       });
     });
 
@@ -53,11 +55,15 @@ class _MyTimerState extends State<MyTimer> {
       _hours=0;
       _minutes=0;
       _seconds=0;
+      isenable=true;
     });
   }
 
   void stopTimer() {
     _timer.cancel();
+    setState(() {
+      isenable=true;
+    });
   }
 
   @override
@@ -72,6 +78,10 @@ class _MyTimerState extends State<MyTimer> {
 
   @override
   Widget build(BuildContext context) {
+
+    double width = MediaQuery.of(context).size.width;
+
+    
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -101,12 +111,12 @@ class _MyTimerState extends State<MyTimer> {
                       decoration: const BoxDecoration(
                         //border: Border.all(color: Colors.white)
                       ),
-                      width: 150,
+                      width: (width/5.487),
                       child: Align(
                           alignment: Alignment.centerRight,
                           child: Text(
                             '$_hours:',
-                            style: const TextStyle(fontSize: 190,
+                            style: TextStyle(fontSize: (width/3.99),
                                 fontWeight: FontWeight.w100),
                           )
                       ),
@@ -114,26 +124,27 @@ class _MyTimerState extends State<MyTimer> {
                 ),
 
 
-                TextContainer(text: _minutes, width: 270,fontsize: 190),
+                TextContainer(text: _minutes, width: width,fontsize: (width/3.99)),
 
 
                 Container(
                   decoration: const BoxDecoration(
                     //border: Border.all(color: Colors.white)
                   ),
-                  width: 95,
+                  width: (width/8.5),
                   child: Align(
                       alignment: Alignment.center,
                       child: Row(
                         children: <Widget>[
+                          Text(':',style: TextStyle(fontSize: (width/10.975),fontWeight: FontWeight.w100),),
                           Visibility(
                               visible: (_seconds<10)?true:false,
                               child: Text(number,
-                                style: const TextStyle(fontSize: 80,fontWeight: FontWeight.w100),)
+                                style: TextStyle(fontSize: (width/10.975),fontWeight: FontWeight.w100),)
                           ),
                           Text(
                             '$_seconds',
-                            style: const TextStyle(fontSize: 80,fontWeight: FontWeight.w100),
+                            style: TextStyle(fontSize: (width/10.975),fontWeight: FontWeight.w100),
                           ),
                         ],
                       )
@@ -147,7 +158,7 @@ class _MyTimerState extends State<MyTimer> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  onPressed: startTimer,
+                  onPressed: isenable? startTimer :null,
                   child: const Text('Start'),
                 ),
                 const SizedBox(width: 20),
@@ -163,6 +174,7 @@ class _MyTimerState extends State<MyTimer> {
                   child: const Text('Restart'),
                 ),
                 const SizedBox(width: 40),
+                //Text('$width')
               ],
             ),
           ],
